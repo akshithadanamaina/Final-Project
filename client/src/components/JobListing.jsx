@@ -7,6 +7,12 @@ import JobCard from './JobCard'
 const JobListing = () => {
 
     const { isSearched, searchFilter, setSearchFilter, jobs } = useContext(AppContext)
+    console.log(jobs);
+
+    useEffect(() => {
+        console.log("Jobs updated in JobListing:", jobs)
+    }, [jobs])
+    
 
     const [showFilter, setShowFilter] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
@@ -24,10 +30,11 @@ const JobListing = () => {
 
 
     const handleLocationChange = (location) => {
-        setSelectedCategories((prev) =>
-            prev.includes(location) ? prev.filter(c => c !== location) : [...prev, location]
+        setSelectedLocations((prev) =>
+          prev.includes(location) ? prev.filter(l => l !== location) : [...prev, location]
         )
-    }
+      }
+      
 
     useEffect(() => {
         const matchesCategory = job => selectedCategories.length === 0 || selectedCategories.includes(job.category)
@@ -38,7 +45,7 @@ const JobListing = () => {
 
         const matchesSearchLocation = job => searchFilter.location === "" || job.location.toLowerCase().includes(searchFilter.location.toLowerCase())
 
-        const newFilteredJobs = jobs?.slice().reverse().filter(
+        const newFilteredJobs = jobsData?.slice().reverse().filter(
             job => matchesCategory(job) && matchesLocation(job) && matchesTitle(job) && matchesSearchLocation(job)
         )
 
@@ -131,29 +138,34 @@ const JobListing = () => {
                 <h3 className='font-medium text-3xl py-2' id='job-list'>Latest Jobs</h3>
                 <p className='mb-8' >Get you desired job from top companies</p>
                 <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4'>
-                    {jobsData?.slice((currentPage - 1) * 6, currentPage * 6).map((job, index) => (
-                        <JobCard key={index} job={job} />
+                {filteredJobs?.slice((currentPage - 1) * 6, currentPage * 6).map((job, index) => (
+                    <JobCard key={index} job={job} />
                     ))}
                 </div>
 
 
                 {/* pagination */}
-                {jobsData.length > 0 && (
+                {filteredJobs.length > 0 && (
                     <div className='flex items-center justify-center space-x-2 mt-10 cursor-pointer'>
                         <a href="#job-list">
-                            <img onClick={() => setCurrentPage(Math.max(currentPage - 1), 1)} src={assets.left_arrow_icon} alt="" />
+                        <img onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))} src={assets.left_arrow_icon} alt="" />
                         </a>
-                        {Array.from({ length: Math.ceil(jobsData.length / 6) }).map((_, index) => (
-                            <a key={index} href='#job-list'>
-                                <button onClick={() => setCurrentPage(index + 1)} className={`w-10 h-10 flex items-center justify-center border border-gray-300 rounded cursor-pointer ${currentPage === index + 1 ? 'bg-blue-100 text-blue-500' : 'text-gray-500'}`} >{index + 1}</button>
-                            </a>
+                        {Array.from({ length: Math.ceil(filteredJobs.length / 6) }).map((_, index) => (
+                        <a key={index} href='#job-list'>
+                            <button
+                            onClick={() => setCurrentPage(index + 1)}
+                            className={`w-10 h-10 flex items-center justify-center border border-gray-300 rounded cursor-pointer ${currentPage === index + 1 ? 'bg-blue-100 text-blue-500' : 'text-gray-500'}`}
+                            >
+                            {index + 1}
+                            </button>
+                        </a>
                         ))}
-
                         <a href="#job-list">
-                            <img onClick={() => setCurrentPage(Math.min(currentPage + 1, Math.ceil(jobsData.length / 6)))} src={assets.right_arrow_icon} alt="" />
+                        <img onClick={() => setCurrentPage(Math.min(currentPage + 1, Math.ceil(filteredJobs.length / 6)))} src={assets.right_arrow_icon} alt="" />
                         </a>
                     </div>
                 )}
+
             </section>
 
         </div>

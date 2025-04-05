@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import logo2 from "./logo2.jpeg";
 import logo_img from "./logo_img.svg"
 import search_icon from "./search_icon.svg";
@@ -37,7 +36,6 @@ import adobe_logo from './adobe_logo.png'
 import amazon_logo from './amazon_logo.png'
 
 export const assets = {
-    logo,
     logo2,
     logo_img,
     search_icon,
@@ -110,7 +108,7 @@ export const jobsApplied = [
         company: 'Amazon',
         title: 'Full Stack Developer',
         location: 'Boston, MA',
-        date: '22 Aug, 2024',
+        date: '22 Jan, 2025',
         status: 'Pending',
         logo: company_icon,
     },
@@ -118,7 +116,7 @@ export const jobsApplied = [
         company: 'Meta',
         title: 'Data Scientist',
         location: 'San Francisco',
-        date: '22 Aug, 2024',
+        date: '12 Feb, 2025',
         status: 'Rejected',
         logo: company_icon,
     },
@@ -126,7 +124,7 @@ export const jobsApplied = [
         company: 'Google',
         title: 'Marketing Manager',
         location: 'London',
-        date: '25 Sep, 2024',
+        date: '25 Jan, 2025',
         status: 'Accepted',
         logo: company_icon,
     },
@@ -142,7 +140,7 @@ export const jobsApplied = [
         company: 'Microsoft',
         title: 'Full Stack Developer',
         location: 'Austin, TX',
-        date: '25 Sep, 2024',
+        date: '27 Dec, 2024',
         status: 'Accepted',
         logo: company_icon,
     },
